@@ -18,8 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Optional;
-
 public class RestAPI {
     public static final String URL = "https://restcountries.com/v2/all";
     private final Context context;
@@ -38,23 +36,39 @@ public class RestAPI {
                     String name = "";
                     String flag = "";
                     String capital;
-                    String region ="";
+                    String region = "";
+                    String abbreviation = "";
+                    JSONArray calling_codes = null;
+                    int population = 0;
+                    Currency[] currencies = null;
+                    Currency currency;
+                    double[] latlng = null;
                     Country[] countries = new Country[length];
                     for (int i = 0; i < countries.length; i++) {
+                        JSONArray currencies_json = null;
                         try {
                             JSONObject jsonObject = (JSONObject) response.get(i);
                             name = jsonObject.getString("name");
                             flag = jsonObject.getJSONObject("flags").getString("png");
                             capital = jsonObject.getString("capital");
                             region = jsonObject.getString("region");
-                            Log.d("log", region);
-                            String abbreviation = jsonObject.getString("alpha3Code");
+                            abbreviation = jsonObject.getString("alpha3Code");
+                            calling_codes  = jsonObject.getJSONArray("callingCodes");
+                            population  = jsonObject.getInt("population");
+                            currencies_json  = jsonObject.getJSONArray("currencies");
+                            currencies = new Currency[currencies_json.length()];
+                            for (int j = 0; j < currencies_json.length(); j++){
+                                currency = new Currency(currencies_json.getJSONObject(j).getString("code"),currencies_json.getJSONObject(j).getString("name"),currencies_json.getJSONObject(j).getString("symbol"));
+                                currencies[j] = currency;
+                            }
+                            latlng = new double[]{jsonObject.getJSONArray("latlng").getDouble(0), jsonObject.getJSONArray("latlng").getDouble(1)};
+
                         } catch (JSONException e) {
                             capital = "No Capital";
                             region = "No Region";
                         }
 
-                        Country country = new Country(name,flag,capital,region);
+                        Country country = new Country(name,flag,capital,region,abbreviation,calling_codes, population,currencies, latlng);
                         countries[i] = country;
 
                         apiListener.onLoadCountryAPI(countries);

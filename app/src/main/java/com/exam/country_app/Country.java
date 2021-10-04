@@ -8,18 +8,40 @@ public class Country {
     private final String capital;
     private final String flag;
     private final String region;
-    private String abbreviation;
+    private final String abbreviation;
+    private final JSONArray calling_codes;
+    private final int population;
+    private final Currency[] currency;
+    private final double[] latlng;
 
 
-    public Country(String name,String flag, String capital,String region) {
+    public Country(String name, String flag, String capital, String region, String abbreviation, JSONArray calling_codes, int population, Currency[] currency, double[] latlng) {
         this.name = name;
         this.flag = flag;
         this.capital = capital;
         this.region = region;
         this.abbreviation = abbreviation;
-
+        this.calling_codes = calling_codes;
+        this.population = population;
+        this.currency = currency;
+        this.latlng = latlng;
     }
 
+    public double[] getLatlng() {
+        return latlng;
+    }
+
+    public Currency[] getCurrency() {
+        return currency;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public JSONArray getCalling_codes() {
+        return calling_codes;
+    }
     public String getName() {
         return name;
     }

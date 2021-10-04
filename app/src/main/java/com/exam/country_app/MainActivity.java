@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private int getTargetPosition(String target) {
         List<Country> countryList = Arrays.asList(adapter.countries);
         for (int i = 0; i < countryList.size(); i++) {
-                if(countryList.get(i).getName().contains(target))
+                if(countryList.get(i).getName().toLowerCase().contains(target.toLowerCase()) || countryList.get(i).getAbbreviation().toLowerCase().contains(target.toLowerCase()) )
                     return i;
         }
         return 0;
