@@ -85,7 +85,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         return countries.length;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
