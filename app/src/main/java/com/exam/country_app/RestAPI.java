@@ -2,10 +2,12 @@ package com.exam.country_app;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Build;
-import android.util.Base64;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,7 +15,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.Optional;
 
 public class RestAPI {
     public static final String URL = "https://restcountries.com/v2/all";
@@ -26,10 +31,34 @@ public class RestAPI {
 
     public void loadCountryAPI(APIListener apiListener){
             Response.Listener<JSONArray> successListener = new Response.Listener<JSONArray>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onResponse(JSONArray response) {
-                        Log.d("response", response.toString());
-                        apiListener.onLoadCountryAPI(response.toString());
+                    int length = response.length();
+                    String name = "";
+                    String flag = "";
+                    String capital;
+                    String region ="";
+                    Country[] countries = new Country[length];
+                    for (int i = 0; i < countries.length; i++) {
+                        try {
+                            JSONObject jsonObject = (JSONObject) response.get(i);
+                            name = jsonObject.getString("name");
+                            flag = jsonObject.getJSONObject("flags").getString("png");
+                            capital = jsonObject.getString("capital");
+                            region = jsonObject.getString("region");
+                            Log.d("log", region);
+                            String abbreviation = jsonObject.getString("alpha3Code");
+                        } catch (JSONException e) {
+                            capital = "No Capital";
+                            region = "No Region";
+                        }
+
+                        Country country = new Country(name,flag,capital,region);
+                        countries[i] = country;
+
+                        apiListener.onLoadCountryAPI(countries);
+                    }
                 }
             };
 
@@ -41,10 +70,12 @@ public class RestAPI {
 
                 }
             };
-           JsonArrayRequest request = new JsonArrayRequest (Request.Method.GET, URL, null, successListener, errorListener);
+            JsonArrayRequest request = new JsonArrayRequest (Request.Method.GET, URL, null, successListener, errorListener);
             ProgressDialog pd = new ProgressDialog(context);
             pd.setMessage("loading");
             pd.show();
+            pd.setContentView(R.layout.progress_dialog);
+
             requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<String>() {
                 @Override
                 public void onRequestFinished(Request<String> request) {
@@ -55,4 +86,6 @@ public class RestAPI {
             requestQueue.add(request);
 
     }
+
+
 }

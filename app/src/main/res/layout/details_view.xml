@@ -2,8 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="10dp"
     android:orientation="vertical">
 
     <ImageView
@@ -17,12 +21,16 @@
         android:id="@+id/country_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Afghanistan" />
+        android:text="Afghanistan"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -35,31 +43,45 @@
                 android:id="@+id/capital"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Capital" />
+                android:text="Capital"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/abbreviation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Abbreviation" />
+                android:layout_marginTop="10dp"
+                android:text="Abbreviation"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/population"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Population" />
+                android:layout_marginTop="10dp"
+                android:text="Population"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/longitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Longitude" />
+                android:layout_marginTop="10dp"
+                android:text="Longitude"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/languages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Languages" />
+                android:layout_marginTop="10dp"
+                android:text="Languages"
+                android:textSize="12sp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,31 +94,45 @@
                 android:id="@+id/region"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Region" />
+                android:text="Region"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/calling_codes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Calling Codes" />
+                android:layout_marginTop="10dp"
+                android:text="Calling Codes"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/currencies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Currencies" />
+                android:layout_marginTop="10dp"
+                android:text="Currencies"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Latitude" />
+                android:layout_marginTop="10dp"
+                android:text="Latitude"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/borders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Borders" />
+                android:layout_marginTop="10dp"
+                android:text="Borders"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
     </LinearLayout>

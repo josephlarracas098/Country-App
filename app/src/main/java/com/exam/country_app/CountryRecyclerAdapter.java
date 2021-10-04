@@ -1,6 +1,11 @@
 package com.exam.country_app;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecyclerAdapter.ViewHolder> {
     Country[] countries;
@@ -32,6 +40,11 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
     @Override
     public void onBindViewHolder(@NonNull CountryRecyclerAdapter.ViewHolder holder, int position) {
         holder.name.setText(countries[position].getName());
+        new DownloadImageTask((ImageView) holder.flag).execute(countries[position].getFlag());
+        holder.capital.setText(Html.fromHtml("<b>Capital:</b> " + countries[position].getCapital()));
+        holder.region.setText(Html.fromHtml("<b>Region:</b> " + countries[position].getRegion()));
+        holder.abbreviation.setText(Html.fromHtml("<b>Abbreviation:</b> " + countries[position].getAbbreviation()));
+
 
     }
 
@@ -69,6 +82,31 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
 
     @Override
     public int getItemCount() {
-        return 0;
+        return countries.length;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

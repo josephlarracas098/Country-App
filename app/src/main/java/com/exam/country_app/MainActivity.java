@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -18,18 +17,14 @@ public class MainActivity extends AppCompatActivity {
         RestAPI restAPI = new RestAPI(MainActivity.this);
         restAPI.loadCountryAPI(new APIListener() {
             @Override
-            public void onLoadCountryAPI(String result) {
-                Log.d("Result", result);
+            public void onLoadCountryAPI(Country[] countries) {
+                recyclerView = findViewById(R.id.rv_country);
+                recyclerView.setNestedScrollingEnabled(false);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                adapter = new CountryRecyclerAdapter(MainActivity.this, countries);
+                recyclerView.setAdapter(adapter);
             }
         });
-
-//        recyclerView = findViewById(R.id.rv_country);
-//        recyclerView.setNestedScrollingEnabled(false);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-//        adapter = new CountryRecyclerAdapter(MainActivity.this, announcementDataArr);
-//        recyclerView.setAdapter(adapter);
-
-
     }
 
 }
