@@ -35,7 +35,7 @@ public class RestAPI {
                     int length = response.length();
                     String name = "";
                     String flag = "";
-                    String capital;
+                    String capital = "";
                     String region = "";
                     String abbreviation = "";
                     JSONArray calling_codes = null;
@@ -83,11 +83,21 @@ public class RestAPI {
                             borders  = jsonObject.getJSONArray("borders");
 
                         } catch (JSONException e) {
-                            capital = "No Capital";
-                            region = "No Region";
+                            Log.d("mess", e.getMessage());
+                            e.printStackTrace();
+
+                            if(e.getMessage().equals("No value for capital"))
+                                 capital = "No Capital";
+                            if(e.getMessage().equals("No value for region"))
+                                region = "No Region";
+                            if(e.getMessage().equals("No value for borders")) {
+                                borders = new JSONArray();
+                                borders.put("No Borders");
+                            }
+
                         }
 
-                        Country country = new Country(name,flag,capital,region,abbreviation,calling_codes, population,currencies, latlng,languages, borders);
+                        Country country = new Country(name,flag,capital,region,abbreviation,calling_codes, population,currencies, latlng,languages,borders);
                         countries[i] = country;
 
                         apiListener.onLoadCountryAPI(countries);
