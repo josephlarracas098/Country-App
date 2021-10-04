@@ -47,10 +47,6 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         holder.calling_codes.setText(Html.fromHtml("<b>Calling Codes:</b> " + countries[position].getCalling_codes().toString()));
         holder.population.setText(Html.fromHtml("<b>Population:</b> " + countries[position].getPopulation()));
 
-//        for(Currency currency : countries[position].getCurrency().){
-//            holder.currencies.setText(Html.fromHtml("<b>Currency:</b> <small>" + currency.getCode() + " " + currency.getName() + " " + currency.getSymbol() + "</small>"));
-//        }
-
         StringBuilder currencyString = new StringBuilder();
         for (int j = 0; j < countries[position].getCurrency().length; j++){
             currencyString.append(countries[position].getCurrency()[j].getCode() + "-" + countries[position].getCurrency()[j].getName() + "-" + countries[position].getCurrency()[j].getSymbol() + " ");
