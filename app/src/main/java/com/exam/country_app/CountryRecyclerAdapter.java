@@ -1,6 +1,7 @@
 package com.exam.country_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -86,6 +88,19 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         }
 
         holder.borders.setText(Html.fromHtml("<b>Borders:</b> <small>" + borderString + " " + "" + " " + "" + "</small>"));
+
+        holder.viewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MapActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("longitude", countries[position].getLatlng()[1]);
+                intent.putExtra("latitude", countries[position].getLatlng()[0]);
+                intent.putExtra("name", countries[position].getName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -102,6 +117,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         TextView latitude;
         TextView languages;
         TextView borders;
+        Button viewMap;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +133,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
             latitude = itemView.findViewById(R.id.latitude);
             languages = itemView.findViewById(R.id.languages);
             borders = itemView.findViewById(R.id.borders);
+            viewMap = itemView.findViewById(R.id.view_map);
         }
     }
 
