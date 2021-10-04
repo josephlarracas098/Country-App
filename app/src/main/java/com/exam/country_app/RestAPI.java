@@ -82,7 +82,6 @@ public class RestAPI {
 
                             borders  = jsonObject.getJSONArray("borders");
 
-
                         } catch (JSONException e) {
                             capital = "No Capital";
                             region = "No Region";
