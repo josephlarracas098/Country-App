@@ -13,9 +13,11 @@ public class Country {
     private final int population;
     private final Currency[] currency;
     private final double[] latlng;
+    private final String[] languages;
+    private final JSONArray borders;
 
 
-    public Country(String name, String flag, String capital, String region, String abbreviation, JSONArray calling_codes, int population, Currency[] currency, double[] latlng) {
+    public Country(String name, String flag, String capital, String region, String abbreviation, JSONArray calling_codes, int population, Currency[] currency, double[] latlng, String[] languages, JSONArray borders) {
         this.name = name;
         this.flag = flag;
         this.capital = capital;
@@ -25,6 +27,16 @@ public class Country {
         this.population = population;
         this.currency = currency;
         this.latlng = latlng;
+        this.languages = languages;
+        this.borders = borders;
+    }
+
+    public JSONArray getBorders() {
+        return borders;
+    }
+
+    public String[] getLanguages() {
+        return languages;
     }
 
     public double[] getLatlng() {

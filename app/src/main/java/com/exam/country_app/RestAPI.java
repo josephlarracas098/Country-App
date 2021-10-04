@@ -43,9 +43,17 @@ public class RestAPI {
                     Currency[] currencies = null;
                     Currency currency;
                     double[] latlng = null;
+
+                    String[] languages = null;
+                    String language = "";
+
+                    JSONArray borders = null;
+
                     Country[] countries = new Country[length];
                     for (int i = 0; i < countries.length; i++) {
-                        JSONArray currencies_json = null;
+                        JSONArray currencies_json;
+                        JSONArray languages_json;
+
                         try {
                             JSONObject jsonObject = (JSONObject) response.get(i);
                             name = jsonObject.getString("name");
@@ -57,18 +65,30 @@ public class RestAPI {
                             population  = jsonObject.getInt("population");
                             currencies_json  = jsonObject.getJSONArray("currencies");
                             currencies = new Currency[currencies_json.length()];
+
                             for (int j = 0; j < currencies_json.length(); j++){
                                 currency = new Currency(currencies_json.getJSONObject(j).getString("code"),currencies_json.getJSONObject(j).getString("name"),currencies_json.getJSONObject(j).getString("symbol"));
                                 currencies[j] = currency;
                             }
                             latlng = new double[]{jsonObject.getJSONArray("latlng").getDouble(0), jsonObject.getJSONArray("latlng").getDouble(1)};
 
+
+                            languages_json  = jsonObject.getJSONArray("languages");
+                            languages = new String[languages_json.length()];
+                            for (int j = 0; j < languages_json.length(); j++){
+                                language = jsonObject.getJSONArray("languages").getJSONObject(j).getString("name");
+                                languages[j] = language;
+                            }
+
+                            borders  = jsonObject.getJSONArray("borders");
+
+
                         } catch (JSONException e) {
                             capital = "No Capital";
                             region = "No Region";
                         }
 
-                        Country country = new Country(name,flag,capital,region,abbreviation,calling_codes, population,currencies, latlng);
+                        Country country = new Country(name,flag,capital,region,abbreviation,calling_codes, population,currencies, latlng,languages, borders);
                         countries[i] = country;
 
                         apiListener.onLoadCountryAPI(countries);

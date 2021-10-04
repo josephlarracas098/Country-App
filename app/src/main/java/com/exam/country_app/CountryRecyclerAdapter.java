@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,18 +46,46 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<CountryRecycler
         holder.capital.setText(Html.fromHtml("<b>Capital:</b> " + countries[position].getCapital()));
         holder.region.setText(Html.fromHtml("<b>Region:</b> " + countries[position].getRegion()));
         holder.abbreviation.setText(Html.fromHtml("<b>Abbreviation:</b> " + countries[position].getAbbreviation()));
-        holder.calling_codes.setText(Html.fromHtml("<b>Calling Codes:</b> " + countries[position].getCalling_codes().toString()));
+
+
+        StringBuilder callingCodesString = new StringBuilder();
+        for (int j = 0; j < countries[position].getCalling_codes().length(); j++){
+            try {
+                callingCodesString.append(countries[position].getCalling_codes().getString(j) + " ");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        holder.calling_codes.setText(Html.fromHtml("<b>Calling Codes:</b> " + callingCodesString));
         holder.population.setText(Html.fromHtml("<b>Population:</b> " + countries[position].getPopulation()));
 
         StringBuilder currencyString = new StringBuilder();
         for (int j = 0; j < countries[position].getCurrency().length; j++){
             currencyString.append(countries[position].getCurrency()[j].getCode() + "-" + countries[position].getCurrency()[j].getName() + "-" + countries[position].getCurrency()[j].getSymbol() + " ");
         }
-        holder.currencies.setText(Html.fromHtml("<b>Currency:</b> <small>" + currencyString + " " + "" + " " + "" + "</small>"));
+        holder.currencies.setText(Html.fromHtml("<b>Currency:</b> <small>" + currencyString +  "</small>"));
 
         holder.latitude.setText(Html.fromHtml("<b>Latitude:</b> <small>" + countries[position].getLatlng()[0]));
         holder.longitude.setText(Html.fromHtml("<b>Longitude:</b> <small>" + countries[position].getLatlng()[1]));
 
+        StringBuilder languageString = new StringBuilder();
+        for (int j = 0; j < countries[position].getLanguages().length; j++){
+            languageString.append(countries[position].getLanguages()[j] + " ");
+        }
+
+        holder.languages.setText(Html.fromHtml("<b>Languages:</b> <small>" + languageString + " " + "" + " " + "" + "</small>"));
+
+        StringBuilder borderString = new StringBuilder();
+        for (int j = 0; j < countries[position].getBorders().length(); j++){
+            try {
+                borderString.append(countries[position].getBorders().getString(j) + " ");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        holder.borders.setText(Html.fromHtml("<b>Borders:</b> <small>" + borderString + " " + "" + " " + "" + "</small>"));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
